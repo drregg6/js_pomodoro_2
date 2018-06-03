@@ -5,9 +5,9 @@ let pauseButton = document.querySelector('.pause');
 let inputTime = parseInt(primaryMin.innerText);
 let totalSeconds = inputTime * 60;
 
-startButton.addEventListener('click', function() {
-    let totalSeconds = inputTime * 60;
+startButton.addEventListener('click', beginPomodoro);
 
+function beginPomodoro() {
     let intervalId = setInterval(function() {
         let min = Math.floor(totalSeconds / 60);
         let sec = totalSeconds % 60;
@@ -32,7 +32,7 @@ startButton.addEventListener('click', function() {
             clearInterval(intervalId);
         }
     }, 1000)
-});
+}
 
 // pauseButton.addEventListener('click', function() {
 //     clearInterval(intervalId);
