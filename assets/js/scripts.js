@@ -1,11 +1,37 @@
+/* TODO
+
+- it takes a couple seconds for the timer to go into effect
+
+*/
+
+// elements
 let primaryMin = document.querySelector('.primary-min');
 let primarySec = document.querySelector('.primary-sec');
-let startButton = document.querySelector('.start');
-let pauseButton = document.querySelector('.pause');
+let secondaryMin = document.querySelector('.secondary-min');
+let secondarySec = document.querySelector('.secondary-sec');
+
+// buttons
+const startButton = document.querySelector('.start');
+const pauseButton = document.querySelector('.pause');
+const stopButton = document.querySelector('.stop');
+const breakButton = document.querySelector('.break');
+
+//
 let inputTime = parseInt(primaryMin.innerText);
 let totalSeconds = inputTime * 60;
+let isOnBreak = false;
 
+// event listeners
 startButton.addEventListener('click', beginPomodoro);
+stopButton.addEventListener('click', function() {
+    alert('Hello world!');
+});
+pauseButton.addEventListener('click', function() {
+    console.log('Can you hear this?');
+});
+breakButton.addEventListener('click', function() {
+    console.log('Hello world!');
+})
 
 function beginPomodoro() {
     let intervalId = setInterval(function() {
