@@ -32,3 +32,18 @@ header h1 {
     font-size: 2em;
     letter-spacing: .15em;
 }
+
+button {
+    margin: 0 3px;
+    padding: 3px 14px;
+    font-size: .85em;
+    background-color: #fff;
+    outline: none;
+    border: 1px solid #000;
+    transition: all .15s;
+}
+
+button:hover {
+    background-color: #000;
+    color: #fff;
+}
