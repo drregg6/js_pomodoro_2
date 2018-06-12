@@ -9,6 +9,11 @@ let primaryMin = document.querySelector('.primary-min');
 let primarySec = document.querySelector('.primary-sec');
 let secondaryMin = document.querySelector('.secondary-min');
 let secondarySec = document.querySelector('.secondary-sec');
+let arrows = document.querySelectorAll('.arrows');
+let primaryUp = arrows[0];
+let primaryDown = arrows[1];
+let secondaryUp = arrows[2];
+let secondaryDown = arrows[3];
 
 // buttons
 const startButton = document.querySelector('.start');
@@ -31,7 +36,21 @@ pauseButton.addEventListener('click', function() {
 });
 breakButton.addEventListener('click', function() {
     console.log('Hello world!');
+});
+arrows.forEach(function(arrow) {
+    arrow.addEventListener('mouseenter', function() {
+        // console.log(this);
+        this.classList.remove('fa');
+        this.classList.add('far');
+    });
+    arrow.addEventListener('mouseleave', function() {
+        // console.log(this);
+        this.classList.remove('far');
+        this.classList.add('fa');
+    });
 })
+
+
 
 function beginPomodoro() {
     let intervalId = setInterval(function() {
