@@ -1,6 +1,7 @@
 /* TODO
 
 - it takes a couple seconds for the timer to go into effect
+- when the timer ends, it should go right into the break timer
 
 */
 
@@ -33,9 +34,7 @@ stopButton.addEventListener('click', endPomodoro);
 pauseButton.addEventListener('click', function() {
     console.log('Can you hear this?');
 });
-breakButton.addEventListener('click', function() {
-    console.log('Hello world!');
-});
+breakButton.addEventListener('click', swapTimes);
 arrows.forEach(function(arrow) {
     arrow.addEventListener('mouseenter', function() {
         // console.log(this);
@@ -97,13 +96,23 @@ function beginPomodoro() {
 function endPomodoro() {
     clearInterval(intervalId);
 
-    resetTimes();
+    defaultTimes();
+}
+
+function swapTimes() {
+    let tempPrim = primaryMin.textContent;
+    let tempSec = secondaryMin.textContent;
+
+    primaryMin.textContent = tempSec;
+    primarySec.textContent = '00';
+    secondaryMin.textContent = tempPrim;
+    secondarySec.textContent = '00';
 }
 
 
 
 // helpers
-function resetTimes() {
+function defaultTimes() {
     primaryMin.textContent = '25';
     primarySec.textContent = '00';
     secondaryMin.textContent = '5';
