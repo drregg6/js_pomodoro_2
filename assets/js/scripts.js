@@ -1,8 +1,10 @@
 /* TODO *\
 
-* save the user times in variables
-    -- when the timer reaches 00,
-        the timers should go to what the user sets the clocks to
+* create statements to control the limits of how long the timer can be
+* if timer is running, disable the arrows and start buttons
+* pause functionality
+* with primary/secondary time, I can't keep track of when it's on break
+    or when it's on work..
 
 \* ---- */
 
@@ -25,8 +27,13 @@ const breakButton = document.querySelector('.break');
 
 // variables
 let intervalId;
-let inputTime;
+let inputTime = '25';
 let totalSeconds;
+
+// pause vars
+let isPaused = false;
+let pausedMin;
+let pausedSec;
 
 // event listeners
 startButton.addEventListener('click', beginPomodoro);
@@ -34,7 +41,7 @@ stopButton.addEventListener('click', endPomodoro);
 pauseButton.addEventListener('click', function() {
     console.log('Can you hear this?');
 });
-breakButton.addEventListener('click', swapTimes);
+breakButton.addEventListener('click', swapTimesButton);
 arrows.forEach(function(arrow) {
     arrow.addEventListener('mouseenter', function() {
         // console.log(this);
@@ -48,16 +55,26 @@ arrows.forEach(function(arrow) {
     });
 });
 primaryUp.addEventListener('click', function() {
-    primaryMin.textContent = '' + (parseInt(primaryMin.textContent) + 1);
+    if (primaryMin.textContent < 60) {
+        primaryMin.textContent = '' + (parseInt(primaryMin.textContent) + 1);
+        inputTime = parseInt(primaryMin.innerText);
+    }
 });
 primaryDown.addEventListener('click', function() {
-    primaryMin.textContent = '' + (parseInt(primaryMin.textContent) - 1);
+    if (primaryMin.textContent > 1) {
+        primaryMin.textContent = '' + (parseInt(primaryMin.textContent) - 1);
+        inputTime = parseInt(primaryMin.innerText);
+    }
 });
 secondaryUp.addEventListener('click', function() {
-    secondaryMin.textContent = '' + (parseInt(secondaryMin.textContent) + 1);
+    if (secondaryMin.textContent < 15) {
+        secondaryMin.textContent = '' + (parseInt(secondaryMin.textContent) + 1);
+    }
 });
 secondaryDown.addEventListener('click', function() {
-    secondaryMin.textContent = '' + (parseInt(secondaryMin.textContent) - 1);
+    if (secondaryMin.textContent > 0) {
+        secondaryMin.textContent = '' + (parseInt(secondaryMin.textContent) - 1);
+    }
 });
 
 
@@ -68,28 +85,8 @@ function beginPomodoro() {
     totalSeconds = inputTime * 60;
 
     intervalId = setInterval(function() {
-        let min = Math.floor(totalSeconds / 60);
-        let sec = totalSeconds % 60;
+        countdown();
 
-        if (min === 0) {
-            primaryMin.textContent = '0';
-        } else {
-            primaryMin.textContent = '' + min;
-        }
-
-        if (sec >= 0 && sec <= 9) {
-            primarySec.textContent = '0' + sec;
-        } else {
-            primarySec.textContent = '' + sec;
-        }
-
-        totalSeconds--;
-
-        // if (totalSeconds === -1) {
-        //     primaryMin.textContent = '0';
-        //     primarySec.textContent = '00';
-        //     clearInterval(intervalId);
-        // }
         if (totalSeconds === -1) {
             swapTimes();
             inputTime = parseInt(primaryMin.textContent);
@@ -104,14 +101,11 @@ function endPomodoro() {
     defaultTimes();
 }
 
-function swapTimes() {
-    let tempPrim = primaryMin.textContent;
-    let tempSec = secondaryMin.textContent;
-
-    primaryMin.textContent = tempSec;
-    primarySec.textContent = '00';
-    secondaryMin.textContent = tempPrim;
-    secondarySec.textContent = '00';
+function swapTimesButton() {
+    if (secondaryMin.textContent != 0) {
+        swapTimes();
+        clearInterval(intervalId);
+    }
 }
 
 
@@ -122,4 +116,33 @@ function defaultTimes() {
     primarySec.textContent = '00';
     secondaryMin.textContent = '5';
     secondarySec.textContent = '00';
+}
+
+function swapTimes() {
+    let tempPrim = inputTime;
+    let tempSec = secondaryMin.textContent;
+
+    primaryMin.textContent = tempSec;
+    primarySec.textContent = '00';
+    secondaryMin.textContent = tempPrim;
+    secondarySec.textContent = '00';
+}
+
+function countdown() {
+    let min = Math.floor(totalSeconds / 60);
+    let sec = totalSeconds % 60;
+
+    if (min === 0) {
+        primaryMin.textContent = '0';
+    } else {
+        primaryMin.textContent = '' + min;
+    }
+
+    if (sec >= 0 && sec <= 9) {
+        primarySec.textContent = '0' + sec;
+    } else {
+        primarySec.textContent = '' + sec;
+    }
+
+    totalSeconds--;
 }
