@@ -22,15 +22,14 @@ const stopButton = document.querySelector('.stop');
 const breakButton = document.querySelector('.break');
 
 //
+let intervalId;
 let inputTime;
 let totalSeconds;
 let isOnBreak = false;
 
 // event listeners
 startButton.addEventListener('click', beginPomodoro);
-stopButton.addEventListener('click', function() {
-    alert('Hello world!');
-});
+stopButton.addEventListener('click', endPomodoro);
 pauseButton.addEventListener('click', function() {
     console.log('Can you hear this?');
 });
@@ -64,11 +63,12 @@ secondaryDown.addEventListener('click', function() {
 
 
 
+// event functions
 function beginPomodoro() {
     inputTime = parseInt(primaryMin.innerText);
     totalSeconds = inputTime * 60;
 
-    let intervalId = setInterval(function() {
+    intervalId = setInterval(function() {
         let min = Math.floor(totalSeconds / 60);
         let sec = totalSeconds % 60;
 
@@ -92,4 +92,20 @@ function beginPomodoro() {
             clearInterval(intervalId);
         }
     }, 1000)
+}
+
+function endPomodoro() {
+    clearInterval(intervalId);
+
+    resetTimes();
+}
+
+
+
+// helpers
+function resetTimes() {
+    primaryMin.textContent = '25';
+    primarySec.textContent = '00';
+    secondaryMin.textContent = '5';
+    secondarySec.textContent = '00';
 }
