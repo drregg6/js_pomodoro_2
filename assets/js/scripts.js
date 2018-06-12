@@ -1,20 +1,21 @@
-/* TODO
+/* TODO *\
 
-- it takes a couple seconds for the timer to go into effect
-- when the timer ends, it should go right into the break timer
+* save the user times in variables
+    -- when the timer reaches 00,
+        the timers should go to what the user sets the clocks to
 
-*/
+\* ---- */
 
 // elements
-let primaryMin = document.querySelector('.primary-min');
-let primarySec = document.querySelector('.primary-sec');
-let secondaryMin = document.querySelector('.secondary-min');
-let secondarySec = document.querySelector('.secondary-sec');
-let arrows = document.querySelectorAll('.arrows');
-let primaryUp = arrows[0];
-let primaryDown = arrows[1];
-let secondaryUp = arrows[2];
-let secondaryDown = arrows[3];
+const primaryMin = document.querySelector('.primary-min');
+const primarySec = document.querySelector('.primary-sec');
+const secondaryMin = document.querySelector('.secondary-min');
+const secondarySec = document.querySelector('.secondary-sec');
+const arrows = document.querySelectorAll('.arrows');
+const primaryUp = arrows[0];
+const primaryDown = arrows[1];
+const secondaryUp = arrows[2];
+const secondaryDown = arrows[3];
 
 // buttons
 const startButton = document.querySelector('.start');
@@ -22,11 +23,10 @@ const pauseButton = document.querySelector('.pause');
 const stopButton = document.querySelector('.stop');
 const breakButton = document.querySelector('.break');
 
-//
+// variables
 let intervalId;
 let inputTime;
 let totalSeconds;
-let isOnBreak = false;
 
 // event listeners
 startButton.addEventListener('click', beginPomodoro);
@@ -85,10 +85,15 @@ function beginPomodoro() {
 
         totalSeconds--;
 
+        // if (totalSeconds === -1) {
+        //     primaryMin.textContent = '0';
+        //     primarySec.textContent = '00';
+        //     clearInterval(intervalId);
+        // }
         if (totalSeconds === -1) {
-            primaryMin.textContent = '0';
-            primarySec.textContent = '00';
-            clearInterval(intervalId);
+            swapTimes();
+            inputTime = parseInt(primaryMin.textContent);
+            totalSeconds = inputTime * 60;
         }
     }, 1000)
 }
