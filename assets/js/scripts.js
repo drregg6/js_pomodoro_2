@@ -22,8 +22,8 @@ const stopButton = document.querySelector('.stop');
 const breakButton = document.querySelector('.break');
 
 //
-let inputTime = parseInt(primaryMin.innerText);
-let totalSeconds = inputTime * 60;
+let inputTime;
+let totalSeconds;
 let isOnBreak = false;
 
 // event listeners
@@ -48,11 +48,26 @@ arrows.forEach(function(arrow) {
         this.classList.remove('far');
         this.classList.add('fa');
     });
-})
+});
+primaryUp.addEventListener('click', function() {
+    primaryMin.textContent = '' + (parseInt(primaryMin.textContent) + 1);
+});
+primaryDown.addEventListener('click', function() {
+    primaryMin.textContent = '' + (parseInt(primaryMin.textContent) - 1);
+});
+secondaryUp.addEventListener('click', function() {
+    secondaryMin.textContent = '' + (parseInt(secondaryMin.textContent) + 1);
+});
+secondaryDown.addEventListener('click', function() {
+    secondaryMin.textContent = '' + (parseInt(secondaryMin.textContent) - 1);
+});
 
 
 
 function beginPomodoro() {
+    inputTime = parseInt(primaryMin.innerText);
+    totalSeconds = inputTime * 60;
+
     let intervalId = setInterval(function() {
         let min = Math.floor(totalSeconds / 60);
         let sec = totalSeconds % 60;
@@ -78,7 +93,3 @@ function beginPomodoro() {
         }
     }, 1000)
 }
-
-// pauseButton.addEventListener('click', function() {
-//     clearInterval(intervalId);
-// });

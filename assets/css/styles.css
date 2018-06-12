@@ -34,6 +34,10 @@ header h1 {
     letter-spacing: .15em;
 }
 
+.arrows:hover {
+    cursor: pointer;
+}
+
 button {
     margin: 0 3px;
     padding: 3px 14px;
