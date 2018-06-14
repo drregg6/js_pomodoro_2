@@ -1,10 +1,8 @@
 /* TODO *\
 
-* create statements to control the limits of how long the timer can be
-* if timer is running, disable the arrows and start buttons
 * pause functionality
-* with primary/secondary time, I can't keep track of when it's on break
-    or when it's on work..
+* isBreaking is a stupid way to keep track, think of something better
+* BUG:
 
 \* ---- */
 
@@ -18,6 +16,8 @@ const primaryUp = arrows[0];
 const primaryDown = arrows[1];
 const secondaryUp = arrows[2];
 const secondaryDown = arrows[3];
+const defaultHeader = document.querySelector('#header');
+const breakHeader = document.querySelector('#breaker');
 
 // buttons
 const startButton = document.querySelector('.start');
@@ -32,7 +32,7 @@ let totalSeconds;
 
 //flags
 let isCounting = false;
-let isBreaking = false;
+let isBreaking = false; // this is a ridiculous workaround
 let isPaused = false;
 
 // pause vars
@@ -89,6 +89,7 @@ function beginPomodoro() {
 function endPomodoro() {
     clearInterval(intervalId);
     isCounting = false;
+    isBreaking = false;
 
     defaultTimes();
 }
@@ -109,9 +110,16 @@ function primaryUpClick() {
         return;
     }
 
-    if (primaryMin.textContent < 60) {
-        primaryMin.textContent = '' + (parseInt(primaryMin.textContent) + 1);
-        inputTime = parseInt(primaryMin.innerText);
+    if (isBreaking == false) {
+        if (primaryMin.textContent < 60) {
+            primaryMin.textContent = '' + (parseInt(primaryMin.textContent) + 1);
+            inputTime = parseInt(primaryMin.innerText);
+        }
+    } else {
+        if (primaryMin.textContent < 15) {
+            primaryMin.textContent = '' + (parseInt(primaryMin.textContent) + 1);
+            inputTime = parseInt(primaryMin.innerText);
+        }
     }
 }
 
@@ -119,10 +127,15 @@ function primaryDownClick() {
     if (isCounting) {
         return;
     }
-
-    if (primaryMin.textContent > 1) {
-        primaryMin.textContent = '' + (parseInt(primaryMin.textContent) - 1);
-        inputTime = parseInt(primaryMin.innerText);
+    if (isBreaking == false) {
+        if (primaryMin.textContent > 1) {
+            primaryMin.textContent = '' + (parseInt(primaryMin.textContent) - 1);
+            inputTime = parseInt(primaryMin.innerText);
+        }
+    } else {
+        if (primaryMin.textContent > 0) {
+            primaryMin.textContent = '' + (parseInt(primaryMin.textContent) - 1);
+        }
     }
 }
 
@@ -131,8 +144,15 @@ function secondaryUpClick() {
         return;
     }
 
-    if (secondaryMin.textContent < 15) {
-        secondaryMin.textContent = '' + (parseInt(secondaryMin.textContent) + 1);
+    if (isBreaking == false) {
+        if (secondaryMin.textContent < 15) {
+            secondaryMin.textContent = '' + (parseInt(secondaryMin.textContent) + 1);
+        }
+    } else {
+        if (secondaryMin.textContent < 60) {
+            secondaryMin.textContent = '' + (parseInt(secondaryMin.textContent) + 1);
+            // inputTime = parseInt(secondaryMin.innerText);
+        }
     }
 }
 
@@ -141,8 +161,15 @@ function secondaryDownClick() {
         return;
     }
 
-    if (secondaryMin.textContent > 0) {
-        secondaryMin.textContent = '' + (parseInt(secondaryMin.textContent) - 1);
+    if (isBreaking == false) {
+        if (secondaryMin.textContent > 0) {
+            secondaryMin.textContent = '' + (parseInt(secondaryMin.textContent) - 1);
+        }
+    } else {
+        if (secondaryMin.textContent > 1) {
+            secondaryMin.textContent = '' + (parseInt(secondaryMin.textContent) - 1);
+            // inputTime = parseInt(secondaryMin.innerText);
+        }
     }
 }
 
@@ -156,13 +183,19 @@ function defaultTimes() {
     secondarySec.textContent = '00';
 }
 
+// this needs to be FIXED!
+// at the end of a countdown, secondaryMin becomes '0'
+// instead of what should have been saved
 function swapTimes() {
-    let tempSec = secondaryMin.textContent;
+    isBreaking = !isBreaking;
+    swapHeader();
 
-    secondaryMin.textContent = primaryMin.textContent;
-    secondarySec.textContent = '00';
-    primaryMin.textContent = tempSec;
+    let tempPrim = primaryMin.textContent;
+
+    primaryMin.textContent = secondaryMin.textContent;
     primarySec.textContent = '00';
+    secondaryMin.textContent = tempPrim;
+    secondarySec.textContent = '00';
 }
 
 function countdown() {
@@ -182,4 +215,14 @@ function countdown() {
     }
 
     totalSeconds--;
+}
+
+function swapHeader() {
+    if (isBreaking) {
+        defaultHeader.classList.add('hide');
+        breakHeader.classList.remove('hide');
+    } else {
+        defaultHeader.classList.remove('hide');
+        breakHeader.classList.add('hide');
+    }
 }

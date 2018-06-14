@@ -58,3 +58,10 @@ button:hover {
     background-color: #df3232;
     color: #fff;
 }
+
+.hide {
+    display: none;
+}
+.show {
+    display: block;
+}
