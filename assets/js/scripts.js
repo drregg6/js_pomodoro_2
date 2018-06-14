@@ -2,7 +2,9 @@
 
 * pause functionality
 * isBreaking is a stupid way to keep track, think of something better
-* BUG:
+* arrows eventlistener: in order to use THIS in an eventlistener,
+    it needs to be targeting the outer element (target body(?))
+* BUG: the stinkin' swap() function
 
 \* ---- */
 
