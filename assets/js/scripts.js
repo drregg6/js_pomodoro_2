@@ -23,16 +23,19 @@ const secondaryDown = arrows[3];
 const startButton = document.querySelector('.start');
 const pauseButton = document.querySelector('.pause');
 const stopButton = document.querySelector('.stop');
-const breakButton = document.querySelector('.break');
+const swapButton = document.querySelector('.swap');
 
 // variables
 let intervalId;
-let inputTime = '25';
+let inputTime = primaryMin.textContent;
 let totalSeconds;
+
+//flags
 let isCounting = false;
+let isBreaking = false;
+let isPaused = false;
 
 // pause vars
-let isPaused = false;
 let pausedMin;
 let pausedSec;
 
@@ -42,7 +45,7 @@ stopButton.addEventListener('click', endPomodoro);
 pauseButton.addEventListener('click', function() {
     console.log('Can you hear this?');
 });
-breakButton.addEventListener('click', swapTimesButton);
+swapButton.addEventListener('click', swapTimesButton);
 arrows.forEach(function(arrow) {
     arrow.addEventListener('mouseenter', function() {
         // console.log(this);
@@ -55,44 +58,10 @@ arrows.forEach(function(arrow) {
         this.classList.add('fa');
     });
 });
-primaryUp.addEventListener('click', function() {
-    if (isCounting) {
-        return;
-    }
-
-    if (primaryMin.textContent < 60) {
-        primaryMin.textContent = '' + (parseInt(primaryMin.textContent) + 1);
-        inputTime = parseInt(primaryMin.innerText);
-    }
-});
-primaryDown.addEventListener('click', function() {
-    if (isCounting) {
-        return;
-    }
-
-    if (primaryMin.textContent > 1) {
-        primaryMin.textContent = '' + (parseInt(primaryMin.textContent) - 1);
-        inputTime = parseInt(primaryMin.innerText);
-    }
-});
-secondaryUp.addEventListener('click', function() {
-    if (isCounting) {
-        return;
-    }
-
-    if (secondaryMin.textContent < 15) {
-        secondaryMin.textContent = '' + (parseInt(secondaryMin.textContent) + 1);
-    }
-});
-secondaryDown.addEventListener('click', function() {
-    if (isCounting) {
-        return;
-    }
-
-    if (secondaryMin.textContent > 0) {
-        secondaryMin.textContent = '' + (parseInt(secondaryMin.textContent) - 1);
-    }
-});
+primaryUp.addEventListener('click', primaryUpClick);
+primaryDown.addEventListener('click', primaryDownClick);
+secondaryUp.addEventListener('click', secondaryUpClick);
+secondaryDown.addEventListener('click', secondaryDownClick);
 
 
 
@@ -135,6 +104,48 @@ function swapTimesButton() {
     }
 }
 
+function primaryUpClick() {
+    if (isCounting) {
+        return;
+    }
+
+    if (primaryMin.textContent < 60) {
+        primaryMin.textContent = '' + (parseInt(primaryMin.textContent) + 1);
+        inputTime = parseInt(primaryMin.innerText);
+    }
+}
+
+function primaryDownClick() {
+    if (isCounting) {
+        return;
+    }
+
+    if (primaryMin.textContent > 1) {
+        primaryMin.textContent = '' + (parseInt(primaryMin.textContent) - 1);
+        inputTime = parseInt(primaryMin.innerText);
+    }
+}
+
+function secondaryUpClick() {
+    if (isCounting) {
+        return;
+    }
+
+    if (secondaryMin.textContent < 15) {
+        secondaryMin.textContent = '' + (parseInt(secondaryMin.textContent) + 1);
+    }
+}
+
+function secondaryDownClick() {
+    if (isCounting) {
+        return;
+    }
+
+    if (secondaryMin.textContent > 0) {
+        secondaryMin.textContent = '' + (parseInt(secondaryMin.textContent) - 1);
+    }
+}
+
 
 
 // helpers
@@ -146,13 +157,12 @@ function defaultTimes() {
 }
 
 function swapTimes() {
-    let tempPrim = inputTime;
     let tempSec = secondaryMin.textContent;
 
+    secondaryMin.textContent = primaryMin.textContent;
+    secondarySec.textContent = '00';
     primaryMin.textContent = tempSec;
     primarySec.textContent = '00';
-    secondaryMin.textContent = tempPrim;
-    secondarySec.textContent = '00';
 }
 
 function countdown() {
