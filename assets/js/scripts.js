@@ -29,6 +29,7 @@ const breakButton = document.querySelector('.break');
 let intervalId;
 let inputTime = '25';
 let totalSeconds;
+let isCounting = false;
 
 // pause vars
 let isPaused = false;
@@ -55,23 +56,39 @@ arrows.forEach(function(arrow) {
     });
 });
 primaryUp.addEventListener('click', function() {
+    if (isCounting) {
+        return;
+    }
+
     if (primaryMin.textContent < 60) {
         primaryMin.textContent = '' + (parseInt(primaryMin.textContent) + 1);
         inputTime = parseInt(primaryMin.innerText);
     }
 });
 primaryDown.addEventListener('click', function() {
+    if (isCounting) {
+        return;
+    }
+
     if (primaryMin.textContent > 1) {
         primaryMin.textContent = '' + (parseInt(primaryMin.textContent) - 1);
         inputTime = parseInt(primaryMin.innerText);
     }
 });
 secondaryUp.addEventListener('click', function() {
+    if (isCounting) {
+        return;
+    }
+
     if (secondaryMin.textContent < 15) {
         secondaryMin.textContent = '' + (parseInt(secondaryMin.textContent) + 1);
     }
 });
 secondaryDown.addEventListener('click', function() {
+    if (isCounting) {
+        return;
+    }
+
     if (secondaryMin.textContent > 0) {
         secondaryMin.textContent = '' + (parseInt(secondaryMin.textContent) - 1);
     }
@@ -83,6 +100,11 @@ secondaryDown.addEventListener('click', function() {
 function beginPomodoro() {
     inputTime = parseInt(primaryMin.innerText);
     totalSeconds = inputTime * 60;
+    if (isCounting) {
+        return;
+    } else {
+        isCounting = !isCounting;
+    }
 
     intervalId = setInterval(function() {
         countdown();
@@ -97,11 +119,16 @@ function beginPomodoro() {
 
 function endPomodoro() {
     clearInterval(intervalId);
+    isCounting = false;
 
     defaultTimes();
 }
 
 function swapTimesButton() {
+    if (isCounting) {
+        return;
+    }
+
     if (secondaryMin.textContent != 0) {
         swapTimes();
         clearInterval(intervalId);
