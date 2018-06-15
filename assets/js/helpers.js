@@ -17,6 +17,7 @@ function swapTimes() {
 
     primaryMin.textContent = secondaryMin.textContent;
     primarySec.textContent = '00';
+
     secondaryMin.textContent = tempPrim;
     secondarySec.textContent = '00';
 }
@@ -47,5 +48,13 @@ function swapHeader() {
     } else {
         defaultHeader.classList.remove('hide');
         breakHeader.classList.add('hide');
+    }
+}
+
+function togglePauseHeader() {
+    if (isPaused) {
+        pauseHeader.classList.remove('hide');
+    } else {
+        pauseHeader.classList.add('hide');
     }
 }

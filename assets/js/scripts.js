@@ -19,6 +19,7 @@ const secondaryUp = arrows[2];
 const secondaryDown = arrows[3];
 const defaultHeader = document.querySelector('#header');
 const breakHeader = document.querySelector('#breaker');
+const pauseHeader = document.querySelector('#pause-header');
 
 // buttons
 const startButton = document.querySelector('.start');
@@ -49,6 +50,7 @@ pauseButton.addEventListener('click', function() {
     }
 
     isPaused = true;
+    togglePauseHeader();
     isCounting = false;
     pausedMin = primaryMin.textContent;
     pausedSec = primarySec.textContent;
@@ -80,6 +82,7 @@ function beginPomodoro() {
         inputTime = parseInt(pausedMin);
         totalSeconds = parseInt(pausedSec) + (inputTime * 60);
         isPaused = !isPaused;
+        togglePauseHeader();
     } else {
         inputTime = parseInt(primaryMin.innerText);
         totalSeconds = inputTime * 60;
@@ -108,6 +111,7 @@ function endPomodoro() {
     isBreaking = false;
     isPaused = false;
 
+    togglePauseHeader();
     defaultTimes();
 }
 

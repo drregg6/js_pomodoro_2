@@ -25,6 +25,14 @@ header h1 {
     margin: 10px auto;
 }
 
+header h5 {
+    margin: 2px auto;
+    color: #000;
+    letter-spacing: 1em;
+    text-transform: uppercase;
+    font-family: Arial;
+}
+
 .times h1 {
     font-size: 5em;
     letter-spacing: .3em;
