@@ -124,7 +124,7 @@ function endPomodoro() {
 }
 
 function swapTimesButton() {
-    if (isCounting) {
+    if (isCounting || isPaused) {
         return;
     }
 
