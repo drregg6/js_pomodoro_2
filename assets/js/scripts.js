@@ -1,9 +1,15 @@
 /* TODO *\
 
 * isBreaking is a stupid way to keep track, think of something better
+
 * arrows eventlistener: in order to use THIS in an eventlistener,
     it needs to be targeting the outer element (target body(?))
-* BUG: the stinkin' swap() function
+
+* when user clicks primaryMin or secondaryMin,
+    user should be able to enter whatever time they want
+
+* add comments to code for readability
+* separate code into separate files for readability
 
 \* ---- */
 

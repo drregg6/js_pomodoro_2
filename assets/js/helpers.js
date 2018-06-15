@@ -6,14 +6,11 @@ function defaultTimes() {
     secondarySec.textContent = '00';
 }
 
-// this needs to be FIXED!
-// at the end of a countdown, secondaryMin becomes '0'
-// instead of what should have been saved
 function swapTimes() {
     isBreaking = !isBreaking;
     swapHeader();
 
-    let tempPrim = primaryMin.textContent;
+    let tempPrim = inputTime;
 
     primaryMin.textContent = secondaryMin.textContent;
     primarySec.textContent = '00';
