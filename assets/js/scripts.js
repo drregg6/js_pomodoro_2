@@ -1,6 +1,5 @@
 /* TODO *\
 
-* play won't continue the countdown if paused
 * isBreaking is a stupid way to keep track, think of something better
 * arrows eventlistener: in order to use THIS in an eventlistener,
     it needs to be targeting the outer element (target body(?))
@@ -50,6 +49,7 @@ pauseButton.addEventListener('click', function() {
     }
 
     isPaused = true;
+    isCounting = false;
     pausedMin = primaryMin.textContent;
     pausedSec = primarySec.textContent;
     clearInterval(intervalId);
@@ -78,7 +78,8 @@ secondaryDown.addEventListener('click', secondaryDownClick);
 function beginPomodoro() {
     if (isPaused) {
         inputTime = parseInt(pausedMin);
-        totalSeconds = pausedSec + (inputTime * 60);
+        totalSeconds = parseInt(pausedSec) + (inputTime * 60);
+        isPaused = !isPaused;
     } else {
         inputTime = parseInt(primaryMin.innerText);
         totalSeconds = inputTime * 60;
