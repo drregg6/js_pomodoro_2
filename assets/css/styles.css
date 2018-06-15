@@ -70,3 +70,7 @@ button:hover {
 .hide {
     display: none;
 }
+
+.invisible {
+    visibility: hidden;
+}

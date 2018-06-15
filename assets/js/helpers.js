@@ -50,8 +50,8 @@ function swapHeader() {
 
 function togglePauseHeader() {
     if (isPaused) {
-        pauseHeader.classList.remove('hide');
+        pauseHeader.classList.remove('invisible');
     } else {
-        pauseHeader.classList.add('hide');
+        pauseHeader.classList.add('invisible');
     }
 }

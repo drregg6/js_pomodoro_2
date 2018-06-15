@@ -50,18 +50,7 @@ let pausedSec;
 // event listeners
 startButton.addEventListener('click', beginPomodoro);
 stopButton.addEventListener('click', endPomodoro);
-pauseButton.addEventListener('click', function() {
-    if (isPaused) {
-        return;
-    }
-
-    isPaused = true;
-    togglePauseHeader();
-    isCounting = false;
-    pausedMin = primaryMin.textContent;
-    pausedSec = primarySec.textContent;
-    clearInterval(intervalId);
-});
+pauseButton.addEventListener('click', pausePomodoro);
 swapButton.addEventListener('click', swapTimesButton);
 arrows.forEach(function(arrow) {
     arrow.addEventListener('mouseenter', function() {
@@ -109,6 +98,19 @@ function beginPomodoro() {
             totalSeconds = inputTime * 60;
         }
     }, 1000)
+}
+
+function pausePomodoro() {
+    if (isPaused) {
+        return;
+    }
+
+    isPaused = true;
+    togglePauseHeader();
+    isCounting = false;
+    pausedMin = primaryMin.textContent;
+    pausedSec = primarySec.textContent;
+    clearInterval(intervalId);
 }
 
 function endPomodoro() {
