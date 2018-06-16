@@ -102,15 +102,15 @@ function beginPomodoro() {
 
 function pausePomodoro() {
     if (isPaused) {
-        return;
+        beginPomodoro();
+    } else {
+        isPaused = true;
+        togglePauseHeader();
+        isCounting = false;
+        pausedMin = primaryMin.textContent;
+        pausedSec = primarySec.textContent;
+        clearInterval(intervalId);
     }
-
-    isPaused = true;
-    togglePauseHeader();
-    isCounting = false;
-    pausedMin = primaryMin.textContent;
-    pausedSec = primarySec.textContent;
-    clearInterval(intervalId);
 }
 
 function endPomodoro() {

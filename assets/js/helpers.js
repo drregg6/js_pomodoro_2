@@ -7,10 +7,15 @@ function defaultTimes() {
 }
 
 function swapTimes() {
+    let tempPrim;
     isBreaking = !isBreaking;
     swapHeader();
 
-    let tempPrim = inputTime;
+    if (!isCounting) {
+        tempPrim = primaryMin.textContent;
+    } else {
+        tempPrim = inputTime;
+    }
 
     primaryMin.textContent = secondaryMin.textContent;
     primarySec.textContent = '00';
