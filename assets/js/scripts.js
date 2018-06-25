@@ -73,6 +73,13 @@ secondaryDown.addEventListener('click', secondaryDownClick);
 
 // event functions
 function beginPomodoro() {
+
+    if (isCounting) {
+        return;
+    } else {
+        isCounting = !isCounting;
+    }
+
     if (isPaused) {
         inputTime = parseInt(pausedMin);
         totalSeconds = parseInt(pausedSec) + (inputTime * 60);
@@ -81,12 +88,6 @@ function beginPomodoro() {
     } else {
         inputTime = parseInt(primaryMin.innerText);
         totalSeconds = inputTime * 60;
-    }
-
-    if (isCounting) {
-        return;
-    } else {
-        isCounting = !isCounting;
     }
 
     intervalId = setInterval(function() {
